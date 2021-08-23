@@ -1,40 +1,49 @@
+#include <GLEW/glew.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
-using namespace std;
 
 int main()
 {
-	cout << "A nondescript C++ program using the GLFW library, coded and built using VSCode" << endl;
-	cout << "Initializing Graphics Library FramWork (GLFW)" << endl;
 
-	if (!glfwInit())
-	{
-		return -1;
-	}
+    GLFWwindow *window;
 
-	auto gameWindow = glfwCreateWindow(640, 480, "GLFW Test App", NULL, NULL);
-	if (!gameWindow)
-	{
-		glfwTerminate();
-		return -1;
-	}
+    // Initialize the library
+    if (!glfwInit())
+    {
+        return -1;
+    }
 
-	glfwMakeContextCurrent(gameWindow);
+    // Create a windowed mode window and its OpenGL context
+    window = glfwCreateWindow(640, 480, "GLFW Test App", NULL, NULL);
+    if (!window)
+    {
+        glfwTerminate();
+        return -1;
+    }
 
-	// Application (Game) loop
-	while (!glfwWindowShouldClose(gameWindow))
-	{
-		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT);
-		glBegin(GL_TRIANGLES);
-		glVertex2f(-0.5f, -0.5f);
-		glVertex2f(0.5f, -0.5f);
-		glVertex2f(0.0f, 0.5f);
-		glEnd(); //end drawing of line loop
-		glfwSwapBuffers(gameWindow);
-		glfwPollEvents();
-	}
+    glfwMakeContextCurrent(window);
 
-	glfwTerminate();
-	return 0;
+    // Initialize the GLEW library
+    if (glewInit() != GLEW_OK)
+        std::cout << "Error!" << std::endl;
+
+    // log your opengl drive version
+    std::cout << glGetString(GL_VERSION) << std::endl;
+
+    // Application (Game) loop
+    while (!glfwWindowShouldClose(window))
+    {
+        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT);
+        glBegin(GL_TRIANGLES);
+        glVertex2f(-0.5f, -0.5f);
+        glVertex2f(0.5f, -0.5f);
+        glVertex2f(0.0f, 0.5f);
+        glEnd(); //end drawing of line loop
+        glfwSwapBuffers(window);
+        glfwPollEvents();
+    }
+
+    glfwTerminate();
+    return 0;
 }
